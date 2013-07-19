@@ -97,6 +97,9 @@ module Rubber
       end
 
       def setup_security_groups(host=nil, roles=[])
+        
+        puts "setup_security_groups args => host=#{host.inspect} roles=#{roles.inspect}"
+        
         raise "Digital Ocean provider can only set up one host a time" if host.split(',').size != 1
 
         rubber_cfg = Rubber::Configuration.get_configuration(Rubber.env)
