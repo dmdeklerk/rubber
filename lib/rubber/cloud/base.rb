@@ -97,9 +97,6 @@ module Rubber
       end
 
       def setup_security_groups(host=nil, roles=[])
-        
-        puts "setup_security_groups args => host=#{host.inspect} roles=#{roles.inspect}"
-        
         raise "Digital Ocean provider can only set up one host a time" if host.split(',').size != 1
 
         rubber_cfg = Rubber::Configuration.get_configuration(Rubber.env)
@@ -150,7 +147,7 @@ module Rubber
       end
 
       def describe_security_groups(group_name=nil)
-        rules = capistrano.capture("iptables -S INPUT", :hosts => rubber_env.rubber_instances.collect(&:external_ip)).strip.split("\r\n")
+        rules = capistrano.capture("iptables -S INPUT", :hosts => Rubber::Configuration.rubber_env.rubber_instances.collect(&:external_ip)).strip.split("\r\n")
         scoped_rules = rules.select { |r| r =~ /dport/ }
 
         groups = []
